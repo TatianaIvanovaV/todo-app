@@ -1,30 +1,41 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 
-const AddTodo = ({onCreate}) => {
-  const [value, setValue] = useState(' ')
+function useInputValue(defaultValue = '') {
+  const [value, setValue] = useState(defaultValue)
+  return {
+    bind: {
+      value,
+      onChange: event => setValue(event.target.value)
+    },
+    clear: () => setValue(''),
+    value: () => value
+  }
+}
+
+function AddTodo({ onCreate }) {
+  const input = useInputValue('')
 
   function submitHandler(event) {
-    event.parentDefault()
+    event.preventDefault()
 
-    if (value.trim()) {
-      onCreate(value)
-      setValue(' ')
+    if (input.value().trim()) {
+      onCreate(input.value())
+      input.clear() 
     }
   }
 
   return(
-    <form className='mb-1' onSubmit={submitHandler}>
+    <form onSubmit={submitHandler}>
       <div className='form-group d-flex'>
         <input 
           type='text'
           className='form-control'
           placeholder='Введите заметку'
-          value={value}
-          onChange={e => setValue(e.target.value)}
+          {...input.bind}
         />
         <button
-          type="button" 
+          type="submit" 
           className="btn btn-primary"
         >
           Добавить
@@ -35,7 +46,7 @@ const AddTodo = ({onCreate}) => {
 }
 
 AddTodo.propTypes = {
-  onCreate: PropTypes.func.isRequired,
+  onCreate: PropTypes.func.isRequired
 }
 
 export default AddTodo;

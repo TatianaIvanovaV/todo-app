@@ -2,25 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import TodoItem from './TodoItem';
 
-const styles = {
-  ul: {
-    listStyle: 'none'
-  }
-}
-
-const TodoList = (props) => {
+function TodoList(props) {
   return (
-    <ul className="list-group" style={styles.ul}>
+    <ul className="list-group" style={{ listStyle: 'none', maxWidth: '' }}>
       {props.todos.map((todo, index) => {
-          return (
+        return (
           <TodoItem 
             todo={todo} 
             key={todo.id} 
             index={index} 
             onChange={props.onToggle}
           />
-          )
-        }
+        )
+      }
       )}
     </ul>
   )

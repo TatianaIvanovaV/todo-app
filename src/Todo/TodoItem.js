@@ -6,13 +6,13 @@ const styles = {
   li: {
     display: 'flex',
     justifyContent: "space-between",
-    alignItems: "center",
-  },
+    alignItems: "center"
+  }
 }
 
-const TodoItem = ({todo, index, onChange}) => {
+function TodoItem({todo, index, onChange}) {
   const classes = []
-  const {removeTodo} = useContext(Context)
+  const { removeTodo } = useContext(Context)
 
   if (todo.completed) {
     classes.push('done')
@@ -47,7 +47,7 @@ const TodoItem = ({todo, index, onChange}) => {
 TodoItem.propTypes = {
   todos: PropTypes.isRequired,
   index: PropTypes.number,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
 }
 
 export default TodoItem;
